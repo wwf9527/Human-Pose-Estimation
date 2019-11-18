@@ -4,24 +4,8 @@ import sys
 import os
 from sys import platform
 import argparse
-
-# Import Openpose (Windows/Ubuntu/OSX)
-dir_path = os.path.dirname(os.path.realpath(__file__))
-try:
-    # Windows Import
-    if platform == "win32":
-        # Change these variables to point to the correct folder (Release/x64 etc.)
-        sys.path.append(dir_path + '/../../python/openpose/Release');
-        os.environ['PATH']  = os.environ['PATH'] + ';' + dir_path + '/../../x64/Release;' +  dir_path + '/../../bin;'
-        import pyopenpose as op
-    else:
-        # Change these variables to point to the correct folder (Release/x64 etc.)
-        sys.path.append('../../python');
-        # If you run `make install` (default path is `/usr/local/python` for Ubuntu), you can also access the OpenPose/python module from there. This will install OpenPose and the python library at your desired installation path. Ensure that this is in your python path in order to use it.
-        # sys.path.append('/usr/local/python')
-        from openpose import pyopenpose as op
-except ImportError:
-    print('Error: OpenPose library could not be found. Did you enable `BUILD_PYTHON` in CMake and have this Python script in the right folder?')
+sys.path.append('../../python');
+from openpose import pyopenpose as op
 
 class Estimator(object):
     def __init__(self, model_path=None, face=True, hands=True):
@@ -29,14 +13,14 @@ class Estimator(object):
         self.hands = hands
 
         # Custom Params (refer to include/openpose/flags.hpp for more parameters)
-        params = dict()
-        params["model_folder"] = model_path #"../../../model/"
-        params["face"] = face
-        params["hand"] = hands
+        self.params = dict()
+        self.params["model_folder"] = model_path #"../../../model/"
+        self.params["face"] = face
+        self.params["hand"] = hands
         
         # Starting OpenPose
         self.opWrapper = op.WrapperPython()
-        self.opWrapper.configure(params)
+        self.opWrapper.configure(self.params)
         self.opWrapper.start()
         
         # Initialize Estimation Datastructure
