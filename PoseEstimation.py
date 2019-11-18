@@ -50,7 +50,9 @@ class Estimator(object):
  # Case when mulitple people are in the image
 #If running on a server provide option to send keypoint information back to client
 
-
+#Refer to https://github.com/CMU-Perceptual-Computing-Lab/openpose/blob/master/doc/output.md on what joint each KeyPoint represents
+#The methods above will return Keypoints for every detected person in the image. Each Keypoint will contain an xy coordinate along
+#with a Confidence Level prediction. About 25 Keypoints per person (at least for the body pose excluding the hand/face Keypoints).
 
 if __name__=='__main__':
    # Flags
