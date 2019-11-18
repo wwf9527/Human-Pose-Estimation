@@ -1,0 +1,2 @@
+cd ~/.local/lib/python3.6/site-packages/
+ln -s ~/PropertyofLinuxWizard/WebSocket-Video-Streaming/imagezmq/imagezmq/imagezmq.py imagezmq.py
